@@ -1,50 +1,51 @@
-folder = "/home/dude/Downloads/"
+#FIRST CHANGE THE PATH before beginning
+folder = "/home/space-man/Downloads/"
+documents = "/home/space-man/Documents/"
+#[space-man is just my username]
 import os
 from pathlib import Path
 import shutil
 
+## U can experiment better with the below code!
+### DONT FORGET TO REMOVE the next TWO lines of code when actually putting this to use.
+for i in range(10):
+    Path(folder+'snake🐍'+str(i)+'.py').touch()
 
-def Automate(file_name, name, path=False):
-    if path==True:
-        p = Path(name)
-        p.mkdir(exist_ok = True)
-        print(folder+file_name)
-        print(name)
-        shutil.copy(folder+file_name, name)
-    else:
-        p = Path(folder+name)
-        p.mkdir(exist_ok = True)
-        shutil.move(folder+file_name, folder+name)
-
+def move(file_loc, path):
+    os.makedirs(path, exist_ok=True)
+    shutil.move(file_loc, path)
 
 def sort():
     for file_name in os.listdir(folder):
+
+        file_loc = folder+file_name
+
         if os.path.isdir(os.path.join(folder, file_name)):
-            continue
-        elif file_name == 'Microbe_Obliterator.py':
-            continue   
+            continue  
 
-        elif file_name.endswith('.py'):
-            Automate(file_name, 'Python files')
+        if 'wall' in file_name:
+            move(file_loc ,folder+'wallpaper/')
 
-        elif file_name.endswith('.sol'):
-            Automate(file_name, 'Solidity_files')
-
+        if file_name.endswith('.py'):
+            move(file_loc, folder+'Python files/')
+        
+        elif file_name.endswith('.jpeg') or file_name.endswith('.png') or file_name.endswith('.jpg'):
+            move(file_loc, '/home/space-man/Pictures/')
+        
+        elif file_name.endswith('.txt'):
+            move(file_loc, documents)
+            
         elif file_name.endswith('.zip'):
-            Automate(file_name, 'Zip files')
+            move(file_loc, folder+'Zip files/')
 
         elif file_name.endswith('pdf'):
-            Automate(file_name, '/home/dude/Documents/', path=True)
+            move(file_loc, documents)
+
         elif file_name.endswith('.csv'):
-            Automate(file_name, '/home/dude/Documents/CSV Files')
-        elif file_name.endswith('.txt'):
-            Automate(file_name, '/home/dude/Documents/', path=True)
-            
-        elif file_name.endswith('.jpeg') or file_name.endswith('.png') or file_name.endswith('.jpg'):
-            Automate(file_name, '/home/dude/Pictures/', path=True)
+            move(file_loc, documents+'CSV Files/')
 
         else:
-            Automate(file_name, 'Other')
+            move(file_loc, folder+'Other/')
             
 
 if __name__ == '__main__':
